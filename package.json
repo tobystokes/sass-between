@@ -1,6 +1,6 @@
 {
   "name": "sass-between",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Sass library for fluid sizing between breakpoints",
   "main": "index.js",
   "scripts": {

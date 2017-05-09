@@ -1,6 +1,6 @@
 @charset 'utf-8';
 // TODO: build this in, import-once or what?
-@import "../node_modules/unitconversion/unitconversion";
+@import "../../unitconversion/unitconversion";
 
 $between-min: 360px !default;
 $between-max: 1200px !default;
