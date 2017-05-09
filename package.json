@@ -1,0 +1,29 @@
+{
+  "name": "sass-between",
+  "version": "0.1.0",
+  "description": "Sass library for fluid sizing between breakpoints",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tobystokes/sass-between.git"
+  },
+  "keywords": [
+    "sass",
+    "scss"
+  ],
+  "author": {
+    "name": "Toby Stokes",
+    "email": "toby@tobystokes.uk"
+  },
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/tobystokes/sass-between/issues"
+  },
+  "homepage": "https://github.com/tobystokes/sass-between#readme",
+  "dependencies": {
+    "unitconversion": "^2.1.13"
+  }
+}

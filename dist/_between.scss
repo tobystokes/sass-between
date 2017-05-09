@@ -1,0 +1,72 @@
+@charset 'utf-8';
+// TODO: build this in, import-once or what?
+@import "../node_modules/unitconversion/unitconversion";
+
+$between-min: 360px !default;
+$between-max: 1200px !default;
+
+/**
+ * Computes a CSS calc function that betweens a value from
+ * A to B over viewport-width A to viewport-width B.
+ * Requires a media query to cap the value at B.
+ */
+
+@function between($lower, $upper, $lowerWidth, $upperWidth) {
+  /* units:
+    passed-in units and gate sizes could be any unit.
+    in practice, might be px em or rem.
+    suggest preserve whatever was used on input
+    */
+  $slope: (px($lower) - px($upper)) / (px($lowerWidth) - px($upperWidth));
+  $base: px($upper) - $slope * px($upperWidth);
+
+  $unit: unit($lower);
+  $baseandunit: call($unit, $base);
+
+  @return calc(#{$baseandunit} + #{100vw * $slope});
+}
+
+/// check whether inputs are single values or lists, and whether values are in compatible units
+@function check-lists($lower, $upper) {
+  $lowerlistlength: length($lower);
+  $otherlistlength: length($upper);
+  @if $lowerlistlength != $otherlistlength {
+    @warn 'Start and End values must have the same number of properties.';
+  }
+  @for $i from 1 through $lowerlistlength {
+    @if unit(nth($lower, $i)) != unit(nth($upper, $i)) {
+      @warn 'Start and End units not matching for ' + nth($lower, $i)+' - '+nth($upper, $i)+'. The second value will be converted to the first unit.';
+    }
+  }
+  @return $lowerlistlength;
+}
+
+/**
+ * Mixin to apply base and media queried values
+ * for the between @function.
+ * Defaults to/from: $between-min/$between-max, but can be overridden.
+ */
+
+@mixin between($property, $lower, $upper, $lowerWidth: $between-min, $upperWidth: $between-max) {
+
+  $listlength: check-lists($lower, $upper);
+
+  #{$property}: $lower;
+
+  @media (min-width: $lowerWidth) {
+    @if $listlength > 1 {
+      $list-values: ();
+      @for $i from 1 through $listlength {
+        $list-values: append($list-values, between(nth($lower, $i), nth($upper, $i), $between-min, $between-max));
+      }
+      #{$property}: $list-values ;
+    } @else {
+      #{$property}: between($lower, $upper, $between-min, $between-max);
+    }
+  }
+
+  @media (min-width: $upperWidth) {
+    #{$property}: $upper;
+  }
+
+}
