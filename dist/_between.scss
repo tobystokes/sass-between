@@ -1,8 +1,13 @@
 @charset 'utf-8';
 // TODO: build this in, import-once or what?
-@import "../../unitconversion/unitconversion";
+@import 'node_modules/unitconversion/unitconversion';
 
+/// Lower lock value - minimum screen width to apply range
+/// @type Number (unit)
 $between-min: 360px !default;
+
+/// Upper lock value - maximum screen width to apply range
+/// @type Number (unit)
 $between-max: 1200px !default;
 
 /**
@@ -11,22 +16,41 @@ $between-max: 1200px !default;
  * Requires a media query to cap the value at B.
  */
 
-@function between($lower, $upper, $lowerWidth, $upperWidth) {
+@function between($lower, $upper, $lower-width, $upper-width) {
   /* units:
     passed-in units and gate sizes could be any unit.
     in practice, might be px em or rem.
     suggest preserve whatever was used on input
     */
-  $slope: (px($lower) - px($upper)) / (px($lowerWidth) - px($upperWidth));
-  $base: px($upper) - $slope * px($upperWidth);
 
-  $unit: unit($lower);
+  // one of these may be zero, but the other may contain a unit
+  $unit: null;
+  @if unitless($lower) == true {
+    $unit: unit($lower);
+  } @else {
+    $unit: unit($upper);
+  }
+  // but if they are both blank, assume px
+  @if $unit == '' {
+    $unit: px;
+  }
+  // @debug unit is $lower, $upper, $unit;
+
+  $slope: call($unit, $lower - $upper) / call($unit, $lower-width - $upper-width);
+  $base: call($unit, $upper) - $slope * call($unit, $upper-width);
+
   $baseandunit: call($unit, $base);
 
   @return calc(#{$baseandunit} + #{100vw * $slope});
 }
 
-/// check whether inputs are single values or lists, and whether values are in compatible units
+/// Check whether inputs are single values or lists,
+/// We can only interpolate if lists are the same length, and use the same unit
+///
+/// @param {Number} $lower - 1st value to check
+/// @param {Number} $upper  - 2nd value to check
+///
+/// @returns {Number}
 @function check-lists($lower, $upper) {
   $lowerlistlength: length($lower);
   $otherlistlength: length($upper);
@@ -34,38 +58,40 @@ $between-max: 1200px !default;
     @warn 'Start and End values must have the same number of properties.';
   }
   @for $i from 1 through $lowerlistlength {
-    @if unit(nth($lower, $i)) != unit(nth($upper, $i)) {
-      @warn 'Start and End units not matching for ' + nth($lower, $i)+' - '+nth($upper, $i)+'. The second value will be converted to the first unit.';
+    @if not comparable(nth($lower, $i), nth($upper, $i)) {
+      @error 'Start and End units not matching for #{nth($lower, $i)} / #{nth($upper, $i)}';
+    }
+    @if unit(nth($lower, $i)) == '%' or unit(nth($upper, $i)) == '%' {
+      @error Cannot use percent as a unit (yet);
     }
   }
   @return $lowerlistlength;
 }
 
-/**
- * Mixin to apply base and media queried values
- * for the between @function.
- * Defaults to/from: $between-min/$between-max, but can be overridden.
- */
-
-@mixin between($property, $lower, $upper, $lowerWidth: $between-min, $upperWidth: $between-max) {
+/// Mixin to apply base and media queried values
+/// for the between @function.
+/// @param {String} $property - css property to apply calculated values to.
+/// @param {Number | List} $lower - lower value (or list of values) to use
+/// @param {Number | List} $upper  - upper value (or list of values) to use
+/// @param {Number} $lower-width [$between-min] - pass a custom $between-min value
+/// @param {Number} $upper-width [$between-max]  - pass a custom $between-max value
+/// @example scss
+///  @include between(font-size, 16px, 24px);
+@mixin between($property, $lower, $upper, $lower-width: $between-min, $upper-width: $between-max) {
 
   $listlength: check-lists($lower, $upper);
 
   #{$property}: $lower;
 
-  @media (min-width: $lowerWidth) {
-    @if $listlength > 1 {
-      $list-values: ();
-      @for $i from 1 through $listlength {
-        $list-values: append($list-values, between(nth($lower, $i), nth($upper, $i), $between-min, $between-max));
-      }
-      #{$property}: $list-values ;
-    } @else {
-      #{$property}: between($lower, $upper, $between-min, $between-max);
+  @media (min-width: $lower-width) {
+    $list-values: ();
+    @for $i from 1 through $listlength {
+      $list-values: append($list-values, between(nth($lower, $i), nth($upper, $i), $between-min, $between-max));
     }
+    #{$property}: $list-values;
   }
 
-  @media (min-width: $upperWidth) {
+  @media (min-width: $upper-width) {
     #{$property}: $upper;
   }
 
