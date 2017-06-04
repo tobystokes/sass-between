@@ -4,7 +4,11 @@
   "description": "Sass library for fluid sizing between breakpoints",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "postinstall": "run build",
+    "build": "node-sass test/test.scss test/test.css --error-bell",
+    "watch": "npm-run-all build --parallel watch:*",
+    "watch:browser-sync": "browser-sync start --server 'test' --files 'test/*.css'",
+    "watch:scss": "onchange '**/*.scss' -- npm run build"
   },
   "repository": {
     "type": "git",
@@ -25,5 +29,11 @@
   "homepage": "https://github.com/tobystokes/sass-between#readme",
   "dependencies": {
     "unitconversion": "^2.1.13"
+  },
+  "devDependencies": {
+    "browser-sync": "^2.18.12",
+    "node-sass": "^4.5.3",
+    "npm-run-all": "^4.0.2",
+    "onchange": "^3.2.1"
   }
 }

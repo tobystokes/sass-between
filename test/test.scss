@@ -1,0 +1,73 @@
+@charset 'utf-8';
+@import '../dist/between';
+
+.between-min,
+.between-max {
+}
+
+.between-min {
+  width: $between-min;
+  background-color: orange;
+  &:after { content: '#{$between-min}'; }
+  @media (min-width: $between-min) {
+    background-color: #ccc;
+  }
+}
+
+.between-max {
+  background-color: #ccc;
+  width: $between-max;
+  &:after { content: '#{$between-max}'; }
+  @media (min-width: $between-max) {
+    background-color: orange;
+  }
+}
+
+.between-tween {
+  background-color: #ccc;
+  @media (min-width: $between-min) and (max-width: $between-max) {
+    background-color: orange;
+  }
+}
+
+.test {
+  border: 1px cyan solid;
+  margin: 1rem 0;
+}
+
+.font-size-rem {
+  @include between('font-size', 1rem, 3rem);
+}
+
+.font-size-px {
+  @include between('font-size', 10px, 20px);
+}
+
+.font-size-customrange {
+  @include between('font-size', 10px, 20px, 600px, 610px);
+}
+
+.line-height-unitless {
+  // @include between('line-height', 2, 1);
+  // &:after { content: 'calc(100vw - #{$between-min})'; }
+}
+
+.wrapper {
+  background: #ccc;
+}
+
+.padding-px {
+  background: yellow;
+  @include between(padding, 10px 0, 20px 25px);
+}
+
+.padding-pc {
+  background: orange;
+  // TODO: %
+  // @include between(padding, 10%, 0 );
+}
+
+.margin-px {
+  background: yellow;
+  @include between(margin, -10px 0, 20px 20px);
+}

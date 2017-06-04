@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Sass-between Examples and refernce tests</title>
+    <link rel="stylesheet" href="test.css">
+  </head>
+  <body>
+    <div class="between-min">
+      between-min:
+    </div>
+    <div class="between-tween">
+      between:
+    </div>
+    <div class="between-max">
+      between-max:
+    </div>
+
+    <div class="test font-size-rem">
+      Font size varies between 1 and 3rem
+    </div>
+
+    <div class="test font-size-px">
+      Font size varies between 10px and 20px
+    </div>
+
+    <div class="test font-size-customrange">
+      Font size varies between 10px and 20px at 600px to 610px
+    </div>
+
+    <div class="test line-height-unitless">
+      Line height varies between 2 and 1 (unitless)<br />
+      Does not work! use em instead?
+    </div>
+
+    <div class="test wrapper">
+      <div class="padding-px">
+        Padding varies between (10px 0) and (20px 20px)
+      </div>
+    </div>
+
+    <div class="test wrapper">
+      <div class="padding-pc">
+        Padding varies between 10% and 20%
+      </div>
+    </div>
+
+    <div class="test wrapper">
+      <div class="margin-px">
+        margin varies between (-10px 0) and (20px 20px)
+      </div>
+    </div>
+
+  </body>
+</html>
