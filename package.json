@@ -4,7 +4,6 @@
   "description": "Sass library for fluid sizing between breakpoints",
   "main": "index.js",
   "scripts": {
-    "postinstall": "run build",
     "build": "node-sass test/test.scss test/test.css --error-bell",
     "watch": "npm-run-all build --parallel watch:*",
     "watch:browser-sync": "browser-sync start --server 'test' --files 'test/*.css'",
