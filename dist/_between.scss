@@ -1,6 +1,6 @@
 @charset 'utf-8';
 // TODO: build this in, import-once or what?
-@import 'node_modules/unitconversion/unitconversion';
+@import "node_modules/unitconversion/unitconversion";
 
 /// Lower lock value - minimum screen width to apply range
 /// @type Number (unit)
@@ -10,13 +10,18 @@ $between-min: 360px !default;
 /// @type Number (unit)
 $between-max: 1200px !default;
 
+/// direction in which to respond to.
+/// accepts width | height (or shorthand) w | h
+/// @type String
+$between-dimension: width !default;
+
 /**
  * Computes a CSS calc function that betweens a value from
  * A to B over viewport-width A to viewport-width B.
  * Requires a media query to cap the value at B.
  */
 
-@function between($lower, $upper, $lower-width, $upper-width) {
+@function between($lower, $upper, $lower-width, $upper-width, $dimension-max) {
   /* units:
     passed-in units and gate sizes could be any unit.
     in practice, might be px em or rem.
@@ -31,17 +36,18 @@ $between-max: 1200px !default;
     $unit: unit($upper);
   }
   // but if they are both blank, assume px
-  @if $unit == '' {
+  @if $unit == "" {
     $unit: px;
   }
   // @debug unit is $lower, $upper, $unit;
 
-  $slope: call($unit, $lower - $upper) / call($unit, $lower-width - $upper-width);
+  $slope: call($unit, $lower - $upper) /
+    call($unit, $lower-width - $upper-width);
   $base: call($unit, $upper) - $slope * call($unit, $upper-width);
 
   $baseandunit: call($unit, $base);
 
-  @return calc(#{$baseandunit} + #{100vw * $slope});
+  @return calc(#{$baseandunit} + #{$dimension-max * $slope});
 }
 
 /// Check whether inputs are single values or lists,
@@ -61,8 +67,8 @@ $between-max: 1200px !default;
     @if not comparable(nth($lower, $i), nth($upper, $i)) {
       @error 'Start and End units not matching for #{nth($lower, $i)} / #{nth($upper, $i)}';
     }
-    @if unit(nth($lower, $i)) == '%' or unit(nth($upper, $i)) == '%' {
-      @error Cannot use percent as a unit (yet);
+    @if unit(nth($lower, $i)) == "%" or unit(nth($upper, $i)) == "%" {
+      @warn Cannot use percent as a unit (yet);
     }
   }
   @return $lowerlistlength;
@@ -75,24 +81,39 @@ $between-max: 1200px !default;
 /// @param {Number | List} $upper  - upper value (or list of values) to use
 /// @param {Number} $lower-width [$between-min] - pass a custom $between-min value
 /// @param {Number} $upper-width [$between-max]  - pass a custom $between-max value
+/// @param {String} $dimension [$between-dimension]  - pass a custom $dimension value (height, not width)
 /// @example scss
 ///  @include between(font-size, 16px, 24px);
-@mixin between($property, $lower, $upper, $lower-width: $between-min, $upper-width: $between-max) {
-
+@mixin between($property, $lower, $upper, $lower-width: $between-min, $upper-width: $between-max, $dimension: $between-dimension) {
   $listlength: check-lists($lower, $upper);
 
   #{$property}: $lower;
 
-  @media (min-width: $lower-width) {
+  $dimension-max: 100vw;
+  $dimension-mq: min-width;
+  @if str-slice($dimension, 1, 1) == "h" {
+    $dimension-max: 100vh;
+    $dimension-mq: min-height;
+  }
+
+  @media ($dimension-mq: $lower-width) {
     $list-values: ();
     @for $i from 1 through $listlength {
-      $list-values: append($list-values, between(nth($lower, $i), nth($upper, $i), $between-min, $between-max));
+      $list-values: append(
+        $list-values,
+        between(
+          nth($lower, $i),
+          nth($upper, $i),
+          $lower-width,
+          $upper-width,
+          $dimension-max
+        )
+      );
     }
     #{$property}: $list-values;
   }
 
-  @media (min-width: $upper-width) {
+  @media ($dimension-mq: $upper-width) {
     #{$property}: $upper;
   }
-
 }

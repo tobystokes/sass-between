@@ -1,5 +1,5 @@
 @charset 'utf-8';
-@import '../dist/between';
+@import "../dist/between";
 
 .between-min,
 .between-max {
@@ -8,7 +8,9 @@
 .between-min {
   width: $between-min;
   background-color: orange;
-  &:after { content: '#{$between-min}'; }
+  &:after {
+    content: "#{$between-min}";
+  }
   @media (min-width: $between-min) {
     background-color: #ccc;
   }
@@ -17,7 +19,9 @@
 .between-max {
   background-color: #ccc;
   width: $between-max;
-  &:after { content: '#{$between-max}'; }
+  &:after {
+    content: "#{$between-max}";
+  }
   @media (min-width: $between-max) {
     background-color: orange;
   }
@@ -36,15 +40,23 @@
 }
 
 .font-size-rem {
-  @include between('font-size', 1rem, 3rem);
+  @include between(font-size, 1rem, 3rem);
 }
 
 .font-size-px {
-  @include between('font-size', 10px, 20px);
+  @include between("font-size", 10px, 20px);
 }
 
 .font-size-customrange {
-  @include between('font-size', 10px, 20px, 600px, 610px);
+  @include between("font-size", 10px, 20px, 600px, 610px);
+}
+
+.font-size-height {
+  @include between("font-size", 10px, 20px, 300px, 1200px, height);
+}
+
+.font-size-height2 {
+  @include between(padding, 10px 0, 20px 0, $dimension:height);
 }
 
 .line-height-unitless {
