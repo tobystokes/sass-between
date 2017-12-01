@@ -6,15 +6,17 @@
   "scripts": {
     "build": "node-sass test/test.scss test/test.css --error-bell",
     "watch": "npm-run-all build --parallel watch:*",
-    "watch:browser-sync":
-      "browser-sync start --server 'test' --files 'test/*.css'",
+    "watch:browser-sync": "browser-sync start --server 'test' --files 'test/*.css'",
     "watch:scss": "onchange '**/*.scss' -- npm run build"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/tobystokes/sass-between.git"
   },
-  "keywords": ["sass", "scss"],
+  "keywords": [
+    "sass",
+    "scss"
+  ],
   "author": {
     "name": "Toby Stokes",
     "email": "toby@tobystokes.uk"
