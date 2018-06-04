@@ -41,6 +41,12 @@ $between-dimension: width !default;
   }
   // @debug unit is $lower, $upper, $unit;
 
+  // Sass > 3.5, Passing a string to call() is deprecated
+  @if function-exists("get-function") {
+    $unit: get-function($unit);
+  }
+
+  // slope is difference
   $slope: call($unit, $lower - $upper) /
     call($unit, $lower-width - $upper-width);
   $base: call($unit, $upper) - $slope * call($unit, $upper-width);
@@ -61,11 +67,11 @@ $between-dimension: width !default;
   $lowerlistlength: length($lower);
   $otherlistlength: length($upper);
   @if $lowerlistlength != $otherlistlength {
-    @warn 'Start and End values must have the same number of properties.';
+    @warn "Start and End values must have the same number of properties.";
   }
   @for $i from 1 through $lowerlistlength {
     @if not comparable(nth($lower, $i), nth($upper, $i)) {
-      @error 'Start and End units not matching for #{nth($lower, $i)} / #{nth($upper, $i)}';
+      @error "Start and End units not matching for #{nth($lower, $i)} / #{nth($upper, $i)}";
     }
     @if unit(nth($lower, $i)) == "%" or unit(nth($upper, $i)) == "%" {
       @warn Cannot use percent as a unit (yet);
@@ -84,7 +90,14 @@ $between-dimension: width !default;
 /// @param {String} $dimension [$between-dimension]  - pass a custom $dimension value (height, not width)
 /// @example scss
 ///  @include between(font-size, 16px, 24px);
-@mixin between($property, $lower, $upper, $lower-width: $between-min, $upper-width: $between-max, $dimension: $between-dimension) {
+@mixin between(
+  $property,
+  $lower,
+  $upper,
+  $lower-width: $between-min,
+  $upper-width: $between-max,
+  $dimension: $between-dimension
+) {
   $listlength: check-lists($lower, $upper);
 
   #{$property}: $lower;
