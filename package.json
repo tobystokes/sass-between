@@ -2,7 +2,7 @@
   "name": "sass-between",
   "version": "0.3.1",
   "description": "Sass library for fluid sizing between breakpoints",
-  "main": "index.js",
+  "main": "dist/_between.scss",
   "scripts": {
     "build": "node-sass test/test.scss test/test.css --error-bell",
     "watch": "npm-run-all build --parallel watch:*",
