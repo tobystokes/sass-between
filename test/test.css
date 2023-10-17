@@ -5,99 +5,150 @@
  */
 .between-min {
   width: 360px;
-  background-color: orange; }
-  .between-min:after {
-    content: "360px"; }
-  @media (min-width: 360px) {
-    .between-min {
-      background-color: #ccc; } }
+  background-color: orange;
+}
+.between-min:after {
+  content: "360px";
+}
+@media (min-width: 360px) {
+  .between-min {
+    background-color: #ccc;
+  }
+}
 
 .between-max {
   background-color: #ccc;
-  width: 1200px; }
-  .between-max:after {
-    content: "1200px"; }
-  @media (min-width: 1200px) {
-    .between-max {
-      background-color: orange; } }
+  width: 1200px;
+}
+.between-max:after {
+  content: "1200px";
+}
+@media (min-width: 1200px) {
+  .between-max {
+    background-color: orange;
+  }
+}
 
 .between-tween {
-  background-color: #ccc; }
-  @media (min-width: 360px) and (max-width: 1200px) {
-    .between-tween {
-      background-color: orange; } }
+  background-color: #ccc;
+}
+@media (min-width: 360px) and (max-width: 1200px) {
+  .between-tween {
+    background-color: orange;
+  }
+}
 
 .test {
   border: 1px cyan solid;
-  margin: 1rem 0; }
+  margin: 1rem 0;
+}
 
 .font-size-rem {
-  font-size: 1rem; }
-  @media (min-width: 360px) {
-    .font-size-rem {
-      font-size: calc(0.14286rem + 3.80952vw); } }
-  @media (min-width: 1200px) {
-    .font-size-rem {
-      font-size: 3rem; } }
+  font-size: 1rem;
+}
+@media (min-width: 360px) {
+  .font-size-rem {
+    font-size: calc(0.1428571429rem + 3.8095238095vw);
+  }
+}
+@media (min-width: 1200px) {
+  .font-size-rem {
+    font-size: 3rem;
+  }
+}
 
 .font-size-px {
-  font-size: 10px; }
-  @media (min-width: 360px) {
-    .font-size-px {
-      font-size: calc(5.71429px + 1.19048vw); } }
-  @media (min-width: 1200px) {
-    .font-size-px {
-      font-size: 20px; } }
+  font-size: 10px;
+}
+@media (min-width: 360px) {
+  .font-size-px {
+    font-size: calc(5.7142857143px + 1.1904761905vw);
+  }
+}
+@media (min-width: 1200px) {
+  .font-size-px {
+    font-size: 20px;
+  }
+}
 
 .font-size-customrange {
-  font-size: 10px; }
-  @media (min-width: 600px) {
-    .font-size-customrange {
-      font-size: calc(-590px + 100vw); } }
-  @media (min-width: 610px) {
-    .font-size-customrange {
-      font-size: 20px; } }
+  font-size: 10px;
+}
+@media (min-width: 600px) {
+  .font-size-customrange {
+    font-size: calc(-590px + 100vw);
+  }
+}
+@media (min-width: 610px) {
+  .font-size-customrange {
+    font-size: 20px;
+  }
+}
 
 .font-size-height {
-  font-size: 10px; }
-  @media (min-height: 300px) {
-    .font-size-height {
-      font-size: calc(6.66667px + 1.11111vh); } }
-  @media (min-height: 1200px) {
-    .font-size-height {
-      font-size: 20px; } }
+  font-size: 10px;
+}
+@media (min-height: 300px) {
+  .font-size-height {
+    font-size: calc(6.6666666667px + 1.1111111111vh);
+  }
+}
+@media (min-height: 1200px) {
+  .font-size-height {
+    font-size: 20px;
+  }
+}
 
 .font-size-height2 {
-  padding: 10px 0; }
-  @media (min-height: 360px) {
-    .font-size-height2 {
-      padding: calc(5.71429px + 1.19048vh) calc(0px + 0vh); } }
-  @media (min-height: 1200px) {
-    .font-size-height2 {
-      padding: 20px 0; } }
+  padding: 10px 0;
+}
+@media (min-height: 360px) {
+  .font-size-height2 {
+    padding: calc(5.7142857143px + 1.1904761905vh) calc(0px + 0vh);
+  }
+}
+@media (min-height: 1200px) {
+  .font-size-height2 {
+    padding: 20px 0;
+  }
+}
 
 .wrapper {
-  background: #ccc; }
+  background: #ccc;
+}
 
 .padding-px {
   background: yellow;
-  padding: 10px 0; }
-  @media (min-width: 360px) {
-    .padding-px {
-      padding: calc(5.71429px + 1.19048vw) calc(-10.71429px + 2.97619vw); } }
-  @media (min-width: 1200px) {
-    .padding-px {
-      padding: 20px 25px; } }
+  padding: 10px 0;
+}
+@media (min-width: 360px) {
+  .padding-px {
+    padding: calc(5.7142857143px + 1.1904761905vw) calc(-10.7142857143px + 2.9761904762vw);
+  }
+}
+@media (min-width: 1200px) {
+  .padding-px {
+    padding: 20px 25px;
+  }
+}
 
 .padding-pc {
-  background: orange; }
+  background: orange;
+}
 
 .margin-px {
   background: yellow;
-  margin: -10px 0; }
-  @media (min-width: 360px) {
-    .margin-px {
-      margin: calc(-22.85714px + 3.57143vw) calc(-8.57143px + 2.38095vw); } }
-  @media (min-width: 1200px) {
-    .margin-px {
-      margin: 20px 20px; } }
+  margin: -10px 0;
+}
+@media (min-width: 360px) {
+  .margin-px {
+    margin: calc(-22.8571428571px + 3.5714285714vw) calc(-8.5714285714px + 2.380952381vw);
+  }
+}
+@media (min-width: 1200px) {
+  .margin-px {
+    margin: 20px 20px;
+  }
+}
+
+/*# sourceMappingURL=test.css.map */

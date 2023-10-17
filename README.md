@@ -2,11 +2,14 @@
 
 Sass library for fluid sizing between breakpoints
 
+DEPRECATED: Natively supported by css viewport-relative units and clamp() these days.
+
 ## Usage
 
 - npm install `sass-between`
-- `@import "~sass-between";` or
+- `@import "sass-between";` or
 - copy `dist/_between.scss` to somewhere else to import.
+- add `--load-path=node_modules` to sass command line, or equivalent bundler config.
 - Replace default variables:
 
 ```

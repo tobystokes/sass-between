@@ -4,7 +4,7 @@
   "description": "Sass library for fluid sizing between breakpoints",
   "main": "dist/_between.scss",
   "scripts": {
-    "build": "node-sass test/test.scss test/test.css --error-bell",
+    "build": "sass --load-path=node_modules test/test.scss test/test.css",
     "watch": "npm-run-all build --parallel watch:*",
     "watch:browser-sync": "browser-sync start --server 'test' --files 'test/*.css'",
     "watch:scss": "onchange '**/*.scss' -- npm run build"
@@ -31,8 +31,8 @@
   },
   "devDependencies": {
     "browser-sync": "^2.18.12",
-    "node-sass": "^4.5.3",
     "npm-run-all": "^4.0.2",
-    "onchange": "^3.2.1"
+    "onchange": "^3.2.1",
+    "sass": "^1.69.3"
   }
 }
